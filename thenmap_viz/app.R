@@ -7,8 +7,12 @@ library(jsonlite)
 #install.packages("geojsonR")
 library(geojsonR)
 
+
 # install.packages("RCurl")
 library(RCurl)
+
+# install.packages("geojsonio")
+library(geojsonio)
 
 library(sp)
 
@@ -64,7 +68,8 @@ ui <- fluidPage(
     # Main panel for displaying outputs ----
     mainPanel(
       # Output: Map ----
-      plotOutput(outputId = "distPlot")
+      plotOutput(outputId = "distPlot"),
+      textOutput(outputId = "selected_var")
       
     )
   )    
@@ -91,6 +96,9 @@ server <- function(input, output) {
     plot(map_data, col="light blue")
 
   })
+  output$selected_var <- renderText(
+    paste0("Well hello there, you have selected the following date: ", input$date)
+  )
 }
 
 # Run the app ----
