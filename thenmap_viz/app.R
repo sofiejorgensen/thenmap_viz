@@ -92,8 +92,11 @@ server <- function(input, output) {
     url <- paste0("http://api.thenmap.net/v2/world-2/geo/", input$date)
     download.file(url = url, "test.geojson", replace = TRUE)
     
-    map_data <- geojson_read("test.geojson", what = "sp")
-    plot(map_data, col="light blue")
+    # map_data <- geojson_read("test.geojson", what = "sp")
+    # plot(map_data, col="light blue")
+
+    map_geojson <- geojson_sf(url)
+    ggplot() + geom_sf(data = map_geojson)
 
   })
   output$selected_var <- renderText(
