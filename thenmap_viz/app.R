@@ -1,18 +1,21 @@
-# install.packages("httr")
-library(httr)
-
-# install.packages("jsonlite")
-library(jsonlite)
-
-#install.packages("geojsonR")
-library(geojsonR)
-
-
-# install.packages("RCurl")
-library(RCurl)
+# # install.packages("httr")
+# library(httr)
+# 
+# # install.packages("jsonlite")
+# library(jsonlite)
+# 
+# #install.packages("geojsonR")
+# library(geojsonR)
+# 
+# 
+# # install.packages("RCurl")
+# library(RCurl)
 
 # install.packages("geojsonio")
-library(geojsonio)
+# library(geojsonio)
+
+devtools::install_github("hankolofs/api_fetch")
+library(apiFetch)
 
 library(sp)
 
@@ -89,14 +92,8 @@ server <- function(input, output) {
   # 2. Its output type is a plot
   output$distPlot <- renderPlot({
     # Standard plot
-    url <- paste0("http://api.thenmap.net/v2/world-2/geo/", input$date)
-    download.file(url = url, "test.geojson", replace = TRUE)
-    
-    # map_data <- geojson_read("test.geojson", what = "sp")
-    # plot(map_data, col="light blue")
-
-    map_geojson <- geojson_sf(url)
-    ggplot() + geom_sf(data = map_geojson)
+    maplist <- fetch(input$date)
+    ggplot() + geom_sf(data = maplist$data)
 
   })
   output$selected_var <- renderText(
