@@ -61,11 +61,8 @@ ui <- fluidPage(
                                                     "Hello land" = 3), selected = 1)),
                column(3, dateInput(inputId = "date",
                                    h3("Date"),
-                                   value = "2000-01-01"),)
-      ),
-      
-      
-      
+                                   value = "2000-01-01"))
+      )
     ),
     
     # Main panel for displaying outputs ----
@@ -92,8 +89,9 @@ server <- function(input, output) {
   # 2. Its output type is a plot
   output$distPlot <- renderPlot({
     # Standard plot
-    maplist <- fetch(input$date)
-    ggplot() + geom_sf(data = maplist$data)
+    map_data_year <- fetch(input$date)$data
+    map_bg <- fetch("2020-01-01")$data
+    ggplot() + geom_sf(data = map_bg, fill = "grey", color = "grey") + geom_sf(data = map_data_year, fill = "#638f54", color = "white")
 
   })
   output$selected_var <- renderText(
