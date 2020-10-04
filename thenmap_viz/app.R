@@ -42,8 +42,8 @@ ui <- fluidPage(
 server <- function(input, output) {
   # National borders of Thenmap data
   output$distPlot <- renderPlot({
-    map_data_year <- fetch(input$date)$data
-    map_bg <- fetch("2020-01-01")$data
+    map_data_year <- fetch(date_str = input$date)$data
+    map_bg <- fetch(date_str = "2020-01-01")$data
     ggplot() + 
       geom_sf(data = map_bg, fill = "grey", color = "grey") +
       geom_sf(data = map_data_year, fill = "#638f54", color = "white")
