@@ -1,11 +1,17 @@
-devtools::install_github("hankolofs/api_fetch")
+if (!require(apiFetch)) {
+  devtools::install_github("hankolofs/api_fetch")
+  library(apiFetch)
+}
+
 library(apiFetch)
 library(sp)
 library(shiny)
 library(ggplot2)
 library(dplyr)
 
-
+theme_set(
+  theme_void()
+)
 
 # Define UI for thenmap_viz application
 ui <- fluidPage(
@@ -24,7 +30,7 @@ ui <- fluidPage(
       fluidRow(column(4, dateInput(inputId = "date",
                                    h3("Date"),
                                    value = "2020-01-01"))
-      ),
+      )
     ),
     
     # Main panel for displaying a map
